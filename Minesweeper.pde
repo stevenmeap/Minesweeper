@@ -1,5 +1,3 @@
-import de.bezier.guido.*;
-
 
 private Cell[][] cells;
 private Reset button;
@@ -155,12 +153,12 @@ private String getSubtitle() {
   return "null error";
 }
 
-public void win() {
+public void checkWin() {
   int nomines = 0;
   for (int i = 0; i < cells.length; i++) {
     for (int o = 0; o < cells[i].length; o++) {
       Cell cell = cells[i][o];
-      if (cell != null && !cell.hasMine() && !cell.isFlagged()) nomines++;
+      if (!cell.hasMine() && !cell.isFlagged()) nomines++;
     }
   }
   win = nomines == 0;
