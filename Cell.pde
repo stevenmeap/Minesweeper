@@ -1,7 +1,7 @@
 public class Cell extends Button {
   private int row, collumn;
   private String difficulty;
-  private boolean hasMine;
+  private boolean mine;
   private boolean flagged;
   private int nearMines;
   private float modifier;
@@ -12,7 +12,7 @@ public class Cell extends Button {
     this.row = row;
     this.collumn = collumn;
 
-    hasMine = Math.random() < modifier;
+    mine = Math.random() < modifier;
   }
 
 
@@ -41,7 +41,7 @@ public class Cell extends Button {
   }
 
   public void drawButton() {
-    if (flagged && hasMine) {
+    if (flagged && mine) {
       r = 255;
       g = 0;
       b = 0;
@@ -63,7 +63,7 @@ public class Cell extends Button {
     if (flagged) return;
     flagged = true;
     checkWin();
-    if (hasMine) {
+    if (mine) {
       r = 255;
       g = 0;
       b = 0;
@@ -105,7 +105,7 @@ public class Cell extends Button {
   }
 
   public void showNearbyMines(int mines) {
-    if (!flagged || hasMine) return;
+    if (!flagged || mine) return;
     pushMatrix();
     fill(255);
     textSize(this.width);
@@ -119,7 +119,7 @@ public class Cell extends Button {
     return flagged;
   }
   public boolean hasMine() {
-    return hasMine;
+    return mine;
   }
 
   public int getNearbyMines() {
