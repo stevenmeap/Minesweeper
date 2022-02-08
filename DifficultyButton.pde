@@ -8,11 +8,11 @@ public class DifficultyButton extends Button {
 
   public void drawButton() {
     super.drawButton();
-    String text = getText();
+    String name = getText();
     pushMatrix();
     fill(0);
     textSize(this.width/ 5);
-    text(text, x, y + this.height - 20);
+    text(name, x, y + this.height - 20);
     popMatrix();
   }
 
