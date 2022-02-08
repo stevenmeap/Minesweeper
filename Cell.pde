@@ -62,7 +62,7 @@ public class Cell extends Button {
   public void flag() {
     if (flagged) return;
     flagged = true;
-    win();
+    checkWin();
     if (hasMine) {
       r = 255;
       g = 0;
