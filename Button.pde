@@ -3,12 +3,15 @@ public class Button {
   protected int width, height;
 
   protected int r, g, b;
+  
+  protected boolean clickOn;
 
  
 
   public Button(int x, int y, int width, int height) {
     this.x = x;
     this.y = y;
+    clickOn = false;
     this.width = width;
     this.height = height;
 
@@ -20,9 +23,10 @@ public class Button {
 
 
   public void drawButton() {
+    if(isClicked()) clickOn = true;
+    if(!isMouseOn()) clickOn = false;
     pushMatrix();
     fill(r, b, g);
-
     stroke(0);
     rectMode(CENTER);
     rect(x, y, width, height);
@@ -31,9 +35,7 @@ public class Button {
   }
 
   public boolean isClicked() {
-    double mx = mouseX;
-    double my = mouseY;
-    return mousePressed && (mx > x - (width/2) && mx < x + (width/2) && my > y - (height/2) && my < y + (height/2));
+    return mousePressed && isMouseOn();
   }
 
   public boolean isMouseOn() {
