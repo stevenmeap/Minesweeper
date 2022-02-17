@@ -41,11 +41,12 @@ public class Cell extends Button {
   }
 
   public void drawButton() {
+    if(isMouseOn() && clickOn && !mousePressed && !flagged) flag();
     if (flagged && mine) {
       r = 255;
       g = 0;
       b = 0;
-    } else if (!flagged && isClicked() || flagged) {
+    } else if (!flagged && clickOn || flagged) {
       r = 80;
       g = 80;
       b = 80;
