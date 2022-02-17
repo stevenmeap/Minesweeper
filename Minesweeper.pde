@@ -72,30 +72,20 @@ private void initButtons() {
 private void showButtons() {
   for (int i = 0; i < cells.length; i++) {
     for (int a = 0; a < cells[i].length; a++) {
-      Button button = cells[i][a];
-      if (button != null)
-        button.drawButton();
-    }
-  }
-}
-
-
-public void mouseReleased() {
-  for (int i = 0; i < cells.length; i++) {
-    for (int a = 0; a < cells[i].length; a++) {
       Cell cell = cells[i][a];
-      if (cell != null)
-        if (cell.isMouseOn())
-          cell.flag();
+      cell.drawButton();
     }
   }
 }
+
+
+
 
 public void setVals() {
   for (int i = 0; i < cells.length; i++) {
     for (int o = 0; o < cells[i].length; o++) {
       Cell cell = cells[i][o];
-      if (cell != null) cell.setNearMines();
+      cell.setNearMines();
     }
   }
 }
