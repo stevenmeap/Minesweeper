@@ -26,7 +26,7 @@ public class Button {
     if(isClicked()) clickOn = true;
     if(!isMouseOn()) clickOn = false;
     pushMatrix();
-    fill(r, b, g);
+    fill(r, g,b);
     stroke(0);
     rectMode(CENTER);
     rect(x, y, width, height);
