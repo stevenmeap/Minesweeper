@@ -94,7 +94,7 @@ public void showAll() {
   for (int i = 0; i < cells.length; i++) {
     for (int o = 0; o < cells[i].length; o++) {
       Cell cell = cells[i][o];
-      if (cell != null) cell.flag();
+      if (cell != null && cell.hasMine()) cell.flag();
     }
   }
 }
