@@ -8,6 +8,16 @@ public class Reset extends Button {
   }
 
   public void drawButton() {
+    
+    if (isClicked()) {
+      r = r/2;
+      g = 0;
+      b = 0;
+    } else {
+      r = 255;
+      g = 0;
+      b = 0;
+    }
     super.drawButton();
     pushMatrix();
     fill(255);
