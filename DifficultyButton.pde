@@ -7,6 +7,15 @@ public class DifficultyButton extends Button {
 
 
   public void drawButton() {
+    if (isClicked()) {
+      r = 150;
+      g = 150;
+      b = 150;
+    }else{
+      r = 200;
+      g = 200;
+      b = 200;
+    }
     super.drawButton();
     String name = getText();
     pushMatrix();
