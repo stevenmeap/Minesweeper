@@ -61,15 +61,15 @@ public class Cell extends Button {
 
 
   public void flag() {
-    if (flagged || win || lost) return;
+    if (flagged || gameBoard.hasWon() || gameBoard.hasLost()) return;
     flagged = true;
-    checkWin();
+    gameBoard.checkWin();
     if (mine) {
       r = 255;
       g = 0;
       b = 0;
-      showAll();
-      lost = true;
+      gameBoard.showAll();
+      gameBoard.setLost(true);
       return;
     }
     r = 80;
@@ -77,10 +77,10 @@ public class Cell extends Button {
     b = 80;
     if (nearMines == 0)
       for (int i = row - 1; i <= row + 1; i++) {
-        if (i < 0 || i >= cells.length) continue;
+        if (i < 0 || i >= gameBoard.cells.length) continue;
         for (int a = collumn - 1; a <= collumn + 1; a++) {
-          if (a < 0 || a >= cells[i].length || (a == collumn && i == row)) continue;
-          Cell cell = cells[i][a];
+          if (a < 0 || a >= gameBoard.cells[i].length || (a == collumn && i == row)) continue;
+          Cell cell = gameBoard.cells[i][a];
           if (cell != null && !cell.isFlagged() && !cell.hasMine()) {
             cell.flag();
           }
@@ -91,10 +91,10 @@ public class Cell extends Button {
   public void setNearMines() {
     int nearMines = 0;
     for (int i = row - 1; i <= row + 1; i++) {
-      if (i < 0 || i >= cells.length) continue;
+      if (i < 0 || i >= gameBoard.cells.length) continue;
       for (int a = collumn - 1; a <= collumn + 1; a++) {
-        if (a < 0 || a >= cells[i].length || (a == collumn && i == row)) continue;
-        Cell cell = cells[i][a];
+        if (a < 0 || a >= gameBoard.cells[i].length || (a == collumn && i == row)) continue;
+        Cell cell = gameBoard.cells[i][a];
         if (cell != null && !cell.isFlagged()) {
           if (cell.hasMine()) {
             nearMines++;
