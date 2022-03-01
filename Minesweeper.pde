@@ -1,13 +1,10 @@
-
-private Cell[][] cells;
+private GameBoard gameBoard;
 private Reset button;
-private String difficulty;
 private DifficultyButton[] buttons;
-public boolean lost;
-public boolean win;
 public void setup() {
   size(700, 700);
-  difficulty = "NORMAL";
+  gameBoard = new GameBoard("NORMAL");
+  gameBoard.initButtons();
   init();
 }
 private void init() {
@@ -18,21 +15,17 @@ private void init() {
   buttons[2] = new DifficultyButton(50, 300, 50, 25, (byte) 2);
   buttons[3] = new DifficultyButton(50, 400, 50, 25, (byte) 3);
   buttons[4] = new DifficultyButton(50, 500, 50, 25, (byte) 4);
-
-  cells = new Cell[55][55];
-  initButtons();
-  win = false;
 }
 
 public void draw() {
   background(255);
-  showButtons();
+  gameBoard.showButtons();
   button.drawButton();
   for (DifficultyButton b : buttons) {
     b.drawButton();
     if (b.isClicked()) {
-      difficulty = b.getDifficulty();
-      init();
+      gameBoard = new GameBoard(b.getDifficulty());
+      gameBoard.initButtons();
     }
   }
   pushMatrix();
@@ -41,67 +34,20 @@ public void draw() {
   textAlign(CENTER);
   text("MINESWEEPER", width/ 2, 50);
   String subtitle = getSubtitle();
-  
-  if(win && !lost)
-    fill(0,255,0);
+
+  if (gameBoard.hasWon() && !gameBoard.hasLost())
+    fill(0, 255, 0);
   textSize(15);
   text(subtitle, width/2, 75);
   popMatrix();
-  if (button.isClicked()) init();
-}
-
-
-
-
-
-private void initButtons() {
-  int x = 0;
-  int y = 0;
-  for (int i = 80; i <= width - 80; i+=10) {
-    for (int a = 80; a <= height - 80; a+=10) {
-      cells[x][y] = new Cell(i+5, a + 5, 10, 10, x, y, difficulty);
-      y++;
-    }
-    x++;
-    y = 0;
-  }
-  setVals();
-  lost = false;
-}
-
-private void showButtons() {
-  for (int i = 0; i < cells.length; i++) {
-    for (int a = 0; a < cells[i].length; a++) {
-      Cell cell = cells[i][a];
-      cell.drawButton();
-    }
+  if (button.isClicked()){
+    gameBoard = new GameBoard(gameBoard.getDifficulty());
+    gameBoard.initButtons();
   }
 }
-
-
-
-
-public void setVals() {
-  for (int i = 0; i < cells.length; i++) {
-    for (int o = 0; o < cells[i].length; o++) {
-      Cell cell = cells[i][o];
-      cell.setNearMines();
-    }
-  }
-}
-
-public void showAll() {
-  for (int i = 0; i < cells.length; i++) {
-    for (int o = 0; o < cells[i].length; o++) {
-      Cell cell = cells[i][o];
-      if (cell != null && cell.hasMine()) cell.flag();
-    }
-  }
-}
-
 private String getSubtitle() {
-  if (win && !lost) {
-    switch(difficulty) {
+  if (gameBoard.hasWon() && !gameBoard.hasLost()) {
+    switch(gameBoard.getDifficulty()) {
     case "HARDER_THAN_HARD": 
       return "You did the impossible";
     case "HARD":
@@ -113,8 +59,8 @@ private String getSubtitle() {
     case "PEACEFUL":
       return "no congratulations for you!!";
     }
-  } else if (!lost) {
-    switch(difficulty) {
+  } else if (!gameBoard.hasLost()) {
+    switch(gameBoard.getDifficulty()) {
     case "HARDER_THAN_HARD": 
       return "do you enjoy pain?";
     case "HARD":
@@ -127,7 +73,7 @@ private String getSubtitle() {
       return "Somehow lower than baby mode...";
     }
   } else {
-    switch(difficulty) {
+    switch(gameBoard.getDifficulty()) {
     case "HARDER_THAN_HARD": 
       return "wasn't lying, it's harder than hard";
     case "HARD":
@@ -141,15 +87,4 @@ private String getSubtitle() {
     }
   }
   return "null error";
-}
-
-public void checkWin() {
-  int nomines = 0;
-  for (int i = 0; i < cells.length; i++) {
-    for (int o = 0; o < cells[i].length; o++) {
-      Cell cell = cells[i][o];
-      if (!cell.hasMine() && !cell.isFlagged()) nomines++;
-    }
-  }
-  win = nomines == 0;
 }
